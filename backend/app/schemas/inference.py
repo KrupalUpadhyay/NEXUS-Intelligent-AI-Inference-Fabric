@@ -25,6 +25,7 @@ class InferenceRequest(BaseModel):
     max_tokens: int = Field(default=512, ge=1, le=8_192)
     user_priority: int = Field(default=5, ge=0, le=10)
     metadata: dict[str, str] = Field(default_factory=dict)
+    preferred_backend: str | None = Field(default=None, max_length=64)
 
 
 class RoutingDecision(BaseModel):
@@ -45,3 +46,15 @@ class InferenceResponse(BaseModel):
     output: str
     cached: bool
     routing: RoutingDecision
+    latency_ms: float = Field(ge=0)
+    estimated_cost_usd: float = Field(ge=0)
+    quality_score: float = Field(ge=0, le=1)
+
+
+class ModelInfo(BaseModel):
+    """Public health and capability summary for an inference backend."""
+
+    name: str
+    provider: str
+    is_local: bool
+    supported_tasks: list[TaskType]

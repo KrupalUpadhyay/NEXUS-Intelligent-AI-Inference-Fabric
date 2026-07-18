@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     semantic_cache_threshold: float = Field(default=0.92, ge=0, le=1)
     embedding_dimensions: int = Field(default=256, ge=8, le=4_096)
     semantic_cache_backend: Literal["memory", "pgvector"] = "memory"
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "gemma3:latest"
+    default_backend: str = "ollama-gemma"
+    mock_latency_enabled: bool = True
 
 
 @lru_cache

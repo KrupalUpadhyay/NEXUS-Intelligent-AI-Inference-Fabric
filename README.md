@@ -4,12 +4,11 @@ NEXUS is an AI inference orchestration platform that will learn to route each
 request to the best available model for latency, cost, and quality. It is being
 built in deliberate, independently runnable phases.
 
-## Current status — Phase 4 complete
+## Current status — Phases 5 and 6 complete
 
 This foundation provides a FastAPI gateway, a React dashboard shell, Docker
-development environment, health checks, structured request logs, and PostgreSQL
-/ Redis service boundaries. Routing and model integrations are introduced in
-later phases.
+development environment, health checks, structured request logs, semantic
+caching, local Ollama inference, provider simulations, and benchmark tooling.
 
 ## Architecture (today)
 
@@ -53,8 +52,8 @@ npm run dev
 2. Configuration, structured logging, middleware, database ✅
 3. Inference API and contracts ✅
 4. Semantic cache and embeddings ✅
-5. Adapter-based inference backends
-6. Synthetic workload and benchmarks
+5. Adapter-based inference backends ✅
+6. Synthetic workload and benchmarks ✅
 7. Orion learned routing policy
 8. Observability dashboard
 9. Request-flow animations

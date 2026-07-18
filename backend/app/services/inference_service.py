@@ -1,6 +1,5 @@
 """Provider-independent inference orchestration for the Phase 3 API."""
 
-from dataclasses import dataclass
 from functools import lru_cache
 from uuid import uuid4
 
@@ -8,28 +7,19 @@ from app.cache.embeddings import HashingEmbeddingProvider
 from app.cache.semantic_cache import InMemorySemanticCacheRepository, SemanticCache, SemanticCacheRepository
 from app.core.config import get_settings
 from app.database.session import get_session_factory
-from app.schemas.inference import InferenceRequest, InferenceResponse, RoutingDecision
-
-
-@dataclass(frozen=True)
-class DevelopmentInferenceExecutor:
-    """Temporary deterministic executor, replaced by adapter selection in Phase 5."""
-
-    async def execute(self, request: InferenceRequest) -> str:
-        """Return an explicit development response without contacting a model."""
-
-        normalized_prompt = " ".join(request.prompt.split())
-        return f"Development executor accepted ({request.task_type.value}): {normalized_prompt}"
+from app.inference.adapters import OllamaAdapter, create_mock_adapters
+from app.inference.registry import AdapterRegistry
+from app.schemas.inference import InferenceRequest, InferenceResponse, ModelInfo, RoutingDecision
 
 
 class InferenceService:
     """Coordinate an inference request while preserving a stable API contract."""
 
     def __init__(
-        self, executor: DevelopmentInferenceExecutor | None = None, semantic_cache: SemanticCache | None = None
+        self, registry: AdapterRegistry | None = None, semantic_cache: SemanticCache | None = None
     ) -> None:
-        self._executor = executor or DevelopmentInferenceExecutor()
         settings = get_settings()
+        self._registry = registry or create_adapter_registry()
         repository: SemanticCacheRepository = InMemorySemanticCacheRepository()
         if settings.semantic_cache_backend == "pgvector":
             from app.cache.pgvector_repository import PgvectorSemanticCacheRepository
@@ -48,22 +38,43 @@ class InferenceService:
                 inference_id=str(uuid4()), request_id=request_id, status="completed", output=cache_match.entry.output,
                 cached=True,
                 routing=cache_match.entry.routing.model_copy(update={"reason": [f"Semantic cache match ({cache_match.similarity:.2%} similarity)."] + cache_match.entry.routing.reason}),
+                latency_ms=0.0,
+                estimated_cost_usd=0.0,
+                quality_score=cache_match.entry.routing.confidence,
             )
 
-        output = await self._executor.execute(request)
+        execution = await self._registry.execute(request)
         routing = RoutingDecision(
-            selected_backend="development-stub", confidence=0.0,
-            reason=["Phase 3 uses a deterministic development executor.", "Adapter routing is introduced in Phase 5."], alternatives=[],
+            selected_backend=execution.backend,
+            confidence=execution.result.quality_score,
+            reason=["Selected by Phase 5 fallback policy."] + execution.failures,
+            alternatives=[model.name for model in self._registry.list_models() if model.name != execution.backend],
         )
-        await self._semantic_cache.store(request.prompt, request.task_type, output, routing)
+        await self._semantic_cache.store(request.prompt, request.task_type, execution.result.output, routing)
         return InferenceResponse(
             inference_id=str(uuid4()),
             request_id=request_id,
             status="completed",
-            output=output,
+            output=execution.result.output,
             cached=False,
             routing=routing,
+            latency_ms=execution.result.latency_ms,
+            estimated_cost_usd=execution.result.estimated_cost_usd,
+            quality_score=execution.result.quality_score,
         )
+
+    def list_models(self) -> list[ModelInfo]:
+        """Return configured adapter metadata for the API and dashboard."""
+
+        return self._registry.list_models()
+
+
+def create_adapter_registry() -> AdapterRegistry:
+    """Build the Phase 5 adapter catalog from environment-backed settings."""
+
+    settings = get_settings()
+    adapters = [OllamaAdapter(settings.ollama_base_url, settings.ollama_model), *create_mock_adapters(settings.mock_latency_enabled)]
+    return AdapterRegistry(adapters, settings.default_backend)
 
 
 @lru_cache

@@ -1,0 +1,25 @@
+{"workload_id": "workload-00000", "prompt": "Extract structured fields from this vector databases receipt.", "task_type": "ocr", "max_tokens": 512, "user_priority": 3}
+{"workload_id": "workload-00001", "prompt": "Summarize this report about vector databases in five bullets.", "task_type": "summarization", "max_tokens": 128, "user_priority": 9}
+{"workload_id": "workload-00002", "prompt": "Translate this vector databases note into Hindi.", "task_type": "translation", "max_tokens": 128, "user_priority": 3}
+{"workload_id": "workload-00003", "prompt": "Summarize this report about model routing in five bullets.", "task_type": "summarization", "max_tokens": 256, "user_priority": 10}
+{"workload_id": "workload-00004", "prompt": "Extract structured fields from this rate limiting receipt.", "task_type": "ocr", "max_tokens": 1024, "user_priority": 9}
+{"workload_id": "workload-00005", "prompt": "Reason step by step about rate limiting and choose an approach.", "task_type": "reasoning", "max_tokens": 1024, "user_priority": 5}
+{"workload_id": "workload-00006", "prompt": "Reason step by step about rate limiting and choose an approach.", "task_type": "reasoning", "max_tokens": 512, "user_priority": 1}
+{"workload_id": "workload-00007", "prompt": "What are the tradeoffs of vector databases?", "task_type": "chat", "max_tokens": 512, "user_priority": 5}
+{"workload_id": "workload-00008", "prompt": "Write a Python function that demonstrates vector databases.", "task_type": "code", "max_tokens": 1024, "user_priority": 8}
+{"workload_id": "workload-00009", "prompt": "What are the tradeoffs of vector databases?", "task_type": "chat", "max_tokens": 512, "user_priority": 10}
+{"workload_id": "workload-00010", "prompt": "Write a Python function that demonstrates model routing.", "task_type": "code", "max_tokens": 256, "user_priority": 1}
+{"workload_id": "workload-00011", "prompt": "Explain async APIs to a beginner.", "task_type": "chat", "max_tokens": 128, "user_priority": 3}
+{"workload_id": "workload-00012", "prompt": "Create a semantic representation for distributed tracing.", "task_type": "embeddings", "max_tokens": 512, "user_priority": 7}
+{"workload_id": "workload-00013", "prompt": "Extract structured fields from this rate limiting receipt.", "task_type": "ocr", "max_tokens": 512, "user_priority": 5}
+{"workload_id": "workload-00014", "prompt": "Summarize this report about vector databases in five bullets.", "task_type": "summarization", "max_tokens": 256, "user_priority": 8}
+{"workload_id": "workload-00015", "prompt": "Extract structured fields from this rate limiting receipt.", "task_type": "ocr", "max_tokens": 1024, "user_priority": 6}
+{"workload_id": "workload-00016", "prompt": "Reason step by step about async APIs and choose an approach.", "task_type": "reasoning", "max_tokens": 128, "user_priority": 3}
+{"workload_id": "workload-00017", "prompt": "Create a semantic representation for async APIs.", "task_type": "embeddings", "max_tokens": 1024, "user_priority": 4}
+{"workload_id": "workload-00018", "prompt": "Explain model routing to a beginner.", "task_type": "chat", "max_tokens": 512, "user_priority": 3}
+{"workload_id": "workload-00019", "prompt": "Extract structured fields from this distributed tracing receipt.", "task_type": "ocr", "max_tokens": 1024, "user_priority": 2}
+{"workload_id": "workload-00020", "prompt": "Reason step by step about rate limiting and choose an approach.", "task_type": "reasoning", "max_tokens": 512, "user_priority": 9}
+{"workload_id": "workload-00021", "prompt": "Translate this async APIs note into Hindi.", "task_type": "translation", "max_tokens": 256, "user_priority": 2}
+{"workload_id": "workload-00022", "prompt": "Write a Python function that demonstrates vector databases.", "task_type": "code", "max_tokens": 128, "user_priority": 1}
+{"workload_id": "workload-00023", "prompt": "Summarize this report about distributed tracing in five bullets.", "task_type": "summarization", "max_tokens": 128, "user_priority": 6}
+{"workload_id": "workload-00024", "prompt": "Translate this model routing note into Hindi.", "task_type": "translation", "max_tokens": 512, "user_priority": 8}

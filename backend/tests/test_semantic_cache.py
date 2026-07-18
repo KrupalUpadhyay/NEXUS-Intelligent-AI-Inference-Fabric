@@ -5,13 +5,16 @@ import pytest
 from app.cache.embeddings import HashingEmbeddingProvider
 from app.cache.semantic_cache import InMemorySemanticCacheRepository, SemanticCache
 from app.schemas.inference import InferenceRequest, RoutingDecision, TaskType
-from app.services.inference_service import DevelopmentInferenceExecutor, InferenceService
+from app.inference.adapters import MockAdapter, MockProfile
+from app.inference.registry import AdapterRegistry
+from app.services.inference_service import InferenceService
 
 
 @pytest.mark.anyio
 async def test_identical_prompt_is_served_from_semantic_cache() -> None:
     cache = SemanticCache(HashingEmbeddingProvider(), InMemorySemanticCacheRepository(), threshold=0.92)
-    service = InferenceService(DevelopmentInferenceExecutor(), cache)
+    registry = AdapterRegistry([MockAdapter("mock", "test", MockProfile(1, 0, 0, 0.9, 1), simulate_latency=False)], "mock")
+    service = InferenceService(registry, cache)
     request = InferenceRequest(prompt="Explain vector search", task_type=TaskType.REASONING)
 
     first = await service.infer(request, "first")
