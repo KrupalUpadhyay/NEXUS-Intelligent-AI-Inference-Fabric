@@ -105,8 +105,8 @@ def create_mock_adapters(simulate_latency: bool) -> list[MockAdapter]:
     """Create reproducible paid-provider simulations for development and training."""
 
     return [
-        MockAdapter("mock-gpt-4o", "openai", MockProfile(700, 180, 0.01, 0.93, 0.995), simulate_latency),
-        MockAdapter("mock-claude-4", "anthropic", MockProfile(820, 200, 0.012, 0.95, 0.994), simulate_latency),
+        MockAdapter("mock-gpt-4o", "openai", MockProfile(500, 130, 0.006, 0.93, 0.995), simulate_latency),
+        MockAdapter("mock-claude-4", "anthropic", MockProfile(560, 150, 0.007, 0.95, 0.994), simulate_latency),
         MockAdapter("mock-llama-3", "meta", MockProfile(420, 120, 0.002, 0.78, 0.99), simulate_latency),
         MockAdapter("mock-mistral", "mistral", MockProfile(500, 140, 0.003, 0.82, 0.992), simulate_latency),
     ]

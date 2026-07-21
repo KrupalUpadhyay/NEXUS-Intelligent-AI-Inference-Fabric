@@ -4,11 +4,13 @@ from functools import lru_cache
 from uuid import uuid4
 
 from app.cache.embeddings import HashingEmbeddingProvider
+from app.analytics.telemetry import telemetry
 from app.cache.semantic_cache import InMemorySemanticCacheRepository, SemanticCache, SemanticCacheRepository
 from app.core.config import get_settings
 from app.database.session import get_session_factory
 from app.inference.adapters import OllamaAdapter, create_mock_adapters
 from app.inference.registry import AdapterRegistry
+from app.policy_engine.orion import OrionPolicyEngine
 from app.schemas.inference import InferenceRequest, InferenceResponse, ModelInfo, RoutingDecision
 
 
@@ -20,6 +22,7 @@ class InferenceService:
     ) -> None:
         settings = get_settings()
         self._registry = registry or create_adapter_registry()
+        self._orion = OrionPolicyEngine(settings.orion_model_path) if settings.orion_enabled else None
         repository: SemanticCacheRepository = InMemorySemanticCacheRepository()
         if settings.semantic_cache_backend == "pgvector":
             from app.cache.pgvector_repository import PgvectorSemanticCacheRepository
@@ -34,7 +37,7 @@ class InferenceService:
 
         cache_match = await self._semantic_cache.lookup(request.prompt, request.task_type)
         if cache_match:
-            return InferenceResponse(
+            response = InferenceResponse(
                 inference_id=str(uuid4()), request_id=request_id, status="completed", output=cache_match.entry.output,
                 cached=True,
                 routing=cache_match.entry.routing.model_copy(update={"reason": [f"Semantic cache match ({cache_match.similarity:.2%} similarity)."] + cache_match.entry.routing.reason}),
@@ -42,16 +45,22 @@ class InferenceService:
                 estimated_cost_usd=0.0,
                 quality_score=cache_match.entry.routing.confidence,
             )
+            await telemetry.record_inference(response)
+            return response
 
-        execution = await self._registry.execute(request)
+        policy_decision = None if request.preferred_backend else self._orion.decide(request) if self._orion else None
+        if policy_decision and not self._registry.has_backend(policy_decision.backend):
+            policy_decision = None
+        execution_request = request.model_copy(update={"preferred_backend": policy_decision.backend}) if policy_decision else request
+        execution = await self._registry.execute(execution_request)
         routing = RoutingDecision(
             selected_backend=execution.backend,
-            confidence=execution.result.quality_score,
-            reason=["Selected by Phase 5 fallback policy."] + execution.failures,
+            confidence=policy_decision.confidence if policy_decision else execution.result.quality_score,
+            reason=(policy_decision.reasons if policy_decision else ["Selected by Phase 5 fallback policy."]) + execution.failures,
             alternatives=[model.name for model in self._registry.list_models() if model.name != execution.backend],
         )
         await self._semantic_cache.store(request.prompt, request.task_type, execution.result.output, routing)
-        return InferenceResponse(
+        response = InferenceResponse(
             inference_id=str(uuid4()),
             request_id=request_id,
             status="completed",
@@ -62,6 +71,8 @@ class InferenceService:
             estimated_cost_usd=execution.result.estimated_cost_usd,
             quality_score=execution.result.quality_score,
         )
+        await telemetry.record_inference(response)
+        return response
 
     def list_models(self) -> list[ModelInfo]:
         """Return configured adapter metadata for the API and dashboard."""

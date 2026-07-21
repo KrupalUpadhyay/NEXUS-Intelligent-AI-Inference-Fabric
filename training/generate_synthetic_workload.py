@@ -14,7 +14,7 @@ TEMPLATES = {
     "ocr": ["Extract structured fields from this {topic} receipt."],
     "embeddings": ["Create a semantic representation for {topic}."],
 }
-TOPICS = ["vector databases", "rate limiting", "async APIs", "distributed tracing", "model routing"]
+TOPICS = ["vector databases", "rate limiting", "async APIs", "distributed tracing", "model routing", "database migrations", "retrieval evaluation", "GPU scheduling", "incident response", "multilingual support"]
 
 
 def generate_workload(count: int, seed: int) -> list[dict[str, object]]:
@@ -24,7 +24,8 @@ def generate_workload(count: int, seed: int) -> list[dict[str, object]]:
     rows = []
     for index in range(count):
         task_type = generator.choice(list(TEMPLATES))
-        rows.append({"workload_id": f"workload-{index:05d}", "prompt": generator.choice(TEMPLATES[task_type]).format(topic=generator.choice(TOPICS)), "task_type": task_type, "max_tokens": generator.choice([128, 256, 512, 1024]), "user_priority": generator.randint(0, 10)})
+        detail = " ".join(generator.choice(TOPICS) for _ in range(generator.randint(0, 12)))
+        rows.append({"workload_id": f"workload-{index:05d}", "prompt": f"{generator.choice(TEMPLATES[task_type]).format(topic=generator.choice(TOPICS))} Context: {detail}", "task_type": task_type, "max_tokens": generator.choice([128, 256, 512, 1024, 2048]), "user_priority": generator.randint(0, 10), "metadata": {"queue_length": str(generator.randint(0, 40))}})
     return rows
 
 

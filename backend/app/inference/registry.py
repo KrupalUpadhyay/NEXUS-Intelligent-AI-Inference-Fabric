@@ -29,6 +29,11 @@ class AdapterRegistry:
 
         return [ModelInfo(name=adapter.name, provider=adapter.provider, is_local=adapter.is_local, supported_tasks=list(adapter.supported_tasks)) for adapter in self._adapters.values()]
 
+    def has_backend(self, backend_name: str) -> bool:
+        """Return whether this deployment has the named adapter configured."""
+
+        return backend_name in self._adapters
+
     async def execute(self, request: InferenceRequest) -> ExecutionResult:
         """Try a preferred/default backend, then healthy alternatives in registry order."""
 

@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     ollama_model: str = "gemma3:latest"
     default_backend: str = "ollama-gemma"
     mock_latency_enabled: bool = True
+    orion_enabled: bool = True
+    orion_model_path: str = "models/orion_policy.joblib"
 
 
 @lru_cache
