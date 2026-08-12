@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     semantic_cache_backend: Literal["memory", "pgvector"] = "memory"
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "gemma3:latest"
-    default_backend: str = "ollama-gemma"
+    default_backend: str = "mock-gpt-4o"
     mock_latency_enabled: bool = True
     orion_enabled: bool = True
     orion_model_path: str = "models/orion_policy.joblib"

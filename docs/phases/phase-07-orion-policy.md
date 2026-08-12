@@ -19,7 +19,7 @@ python training/train_orion.py
 ```
 
 The training script labels each request with the backend that maximizes a
-priority-sensitive quality/latency/cost objective, trains XGBoost, and saves
+priority-sensitive quality/latency/cost objective, trains a Random Forest, and saves
 `backend/models/orion_policy.joblib`. The API loads that artifact at startup.
 If it is absent, NEXUS safely uses the Phase 5 fallback policy.
 

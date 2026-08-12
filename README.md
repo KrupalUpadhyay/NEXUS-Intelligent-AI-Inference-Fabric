@@ -22,11 +22,18 @@ React dashboard  ──HTTP──>  FastAPI gateway
 
 ## Run locally
 
-Prerequisites: Docker Desktop (recommended), or Python 3.11+ and Node 20+.
+Prerequisites: Docker Desktop (recommended), or Python 3.10+ and Node 20+.
+
+Ollama is optional. Without it, NEXUS uses its simulated provider backends and
+the learned Orion policy normally.
 
 ```bash
 docker compose up --build
 ```
+
+The API image uses only compact runtime dependencies. If the first Docker build
+reports a network timeout, rerun `docker compose build api` and then
+`docker compose up`.
 
 - Dashboard: http://localhost:5173
 - API docs: http://localhost:8000/docs
@@ -47,6 +54,10 @@ cd frontend
 npm install
 npm run dev
 ```
+
+If Docker dependency downloads time out, use the complete
+[no-Docker local run guide](docs/run-without-docker.md). It supports the
+dashboard, Orion, semantic cache, live events, and mock backends.
 
 ## Phase roadmap
 

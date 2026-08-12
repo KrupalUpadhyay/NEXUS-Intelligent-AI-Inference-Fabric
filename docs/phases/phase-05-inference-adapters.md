@@ -4,12 +4,12 @@
 `NEXUS_OLLAMA_MODEL`. Mock GPT-4o, Claude 4, Llama 3, and Mistral backends
 simulate latency, cost, quality, availability, and failure without API keys.
 
-Set `preferred_backend` to select a backend. The default is Ollama/Gemma. If it
-is unavailable, NEXUS records the error and falls back to a mock backend.
+Set `preferred_backend` to select a backend. The default uses a simulated
+backend; Ollama/Gemma is optional. If an Ollama adapter is selected but
+unavailable, NEXUS records the error and falls back to a mock backend.
 
 ```powershell
-ollama pull gemma3
-curl.exe -X POST http://localhost:8000/api/v1/infer -H "Content-Type: application/json" -d '{"prompt":"Explain semantic caching","preferred_backend":"ollama-gemma"}'
+curl.exe -X POST http://localhost:8000/api/v1/infer -H "Content-Type: application/json" -d '{"prompt":"Explain semantic caching","preferred_backend":"mock-gpt-4o"}'
 ```
 
 Use `GET /api/v1/models` to inspect configured backends.

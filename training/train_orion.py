@@ -11,7 +11,7 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from xgboost import XGBClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 from app.policy_engine.orion import extract_features  # noqa: E402
@@ -58,7 +58,7 @@ def main() -> None:
     classes = sorted(set(labels))
     class_to_index = {label: index for index, label in enumerate(classes)}
     target = [class_to_index[label] for label in labels]
-    pipeline = Pipeline([("vectorizer", DictVectorizer(sparse=False)), ("classifier", XGBClassifier(n_estimators=160, max_depth=5, learning_rate=0.08, subsample=0.85, colsample_bytree=0.9, objective="multi:softprob", eval_metric="mlogloss", random_state=42))])
+    pipeline = Pipeline([("vectorizer", DictVectorizer(sparse=False)), ("classifier", RandomForestClassifier(n_estimators=240, max_depth=14, min_samples_leaf=2, class_weight="balanced", n_jobs=-1, random_state=42))])
     train_features, test_features, train_target, test_target = train_test_split(
         features, target, test_size=0.2, random_state=42, stratify=target
     )

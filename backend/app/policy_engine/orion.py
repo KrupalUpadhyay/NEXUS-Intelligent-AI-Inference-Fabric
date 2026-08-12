@@ -31,10 +31,14 @@ def extract_features(request: InferenceRequest) -> dict[str, object]:
 
 
 class OrionPolicyEngine:
-    """Load a serialized XGBoost pipeline and make deterministic routing decisions."""
+    """Load a serialized learned-routing pipeline and make deterministic decisions."""
 
     def __init__(self, model_path: str) -> None:
         self._model_path = Path(model_path)
+        if not self._model_path.exists() and not self._model_path.is_absolute():
+            repository_candidate = Path("backend") / self._model_path
+            if repository_candidate.exists():
+                self._model_path = repository_candidate
         artifact = joblib.load(self._model_path) if self._model_path.exists() else None
         self._pipeline = artifact["pipeline"] if artifact else None
         self._classes = artifact["classes"] if artifact else []

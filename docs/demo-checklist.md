@@ -1,14 +1,14 @@
 # NEXUS Demo Checklist
 
-1. Start Ollama and ensure a model is present: `ollama pull gemma3`.
-2. Start NEXUS with `docker compose up --build`, or run the API and dashboard
+1. Start NEXUS with `docker compose up --build`, or run the API and dashboard
    separately as described in the README.
-3. Open the dashboard at `http://localhost:5173` and API docs at
+2. Open the dashboard at `http://localhost:5173` and API docs at
    `http://localhost:8000/docs`.
-4. Submit a reasoning prompt with no preferred backend to show Orion routing.
-5. Submit the same prompt again to show the semantic-cache hit.
-6. Submit a prompt with `preferred_backend: ollama-gemma` to show local model
-   integration and a real response.
-7. Point out the live event, selected backend, confidence, latency, and cost.
+3. Submit a reasoning prompt with no preferred backend to show Orion routing.
+4. Submit the same prompt again to show the semantic-cache hit.
+5. Submit a prompt with `preferred_backend: mock-gpt-4o` to demonstrate
+   deterministic provider simulation and explain that real vendor adapters can
+   replace it without API contract changes.
+6. Point out the live event, selected backend, confidence, latency, and cost.
 
-Keep a mock backend as the fallback for a reliable recording if Ollama is busy.
+Ollama/Gemma is an optional adapter. The full demo works without it.
