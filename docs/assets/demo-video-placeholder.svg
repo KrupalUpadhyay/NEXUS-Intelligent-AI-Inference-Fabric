@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="NEXUS demo video placeholder">
-  <rect width="1200" height="630" fill="#091423"/><rect x="70" y="70" width="1060" height="490" rx="24" fill="#10233d" stroke="#4c84ff"/>
-  <circle cx="600" cy="315" r="90" fill="#4c84ff"/><path d="M570 260 L570 370 L670 315 Z" fill="white"/>
-  <text x="600" y="465" text-anchor="middle" fill="#eef4ff" font-family="Arial, sans-serif" font-size="34" font-weight="bold">NEXUS DEMO VIDEO</text>
-  <text x="600" y="510" text-anchor="middle" fill="#a5b5cf" font-family="Arial, sans-serif" font-size="23">Replace this placeholder with your recorded GitHub demo.</text>
-</svg>
