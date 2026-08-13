@@ -221,38 +221,10 @@ run.py             One-command local launcher
 <!-- TODO: Replace this with a hosted GIF or a video thumbnail. -->
 [NEXUS demo video](https://mega.nz/file/b8QC1YIb#mOB_fRPqShfgTEFhh8YZcuguMLY9mvVCFer60IQjnZw)
 
-Suggested demo sequence:
-
-1. Start NEXUS with `python run.py`.
-2. Show Orion auto-routing a request from the dashboard.
-3. Change priority and queue length while keeping the prompt/task stable.
-4. Demonstrate explicit adapter selection.
-5. Repeat a request to show a semantic-cache hit.
-6. Show live requests and analytics updating without a refresh.
-7. Finish with passing tests.
-
-Use [demo-checklist.md](docs/demo-checklist.md) and [test-and-record-plan.md](docs/test-and-record-plan.md) while recording.
-
-## Current status
-
-All planned Phases 1–10 are implemented:
-
-- FastAPI gateway, Docker, React foundation
-- Configuration, logging, request middleware, persistence boundaries
-- Typed inference API and orchestration service
-- Semantic cache and pgvector-ready persistence
-- Adapter pattern with optional Ollama and simulated providers
-- Synthetic workloads and backend benchmarks
-- Orion learned routing policy
-- Live dashboard, WebSocket telemetry, and animations
-- Tests, documentation, and local launcher
+Run Using : 'python run.py'
 
 ## Limitations and next steps
 
 - Simulated providers are intentionally used for cost-free, repeatable demos; real provider SDK adapters are a natural next step.
 - The current telemetry service is process-local for the demo. Redis pub/sub and persisted analytics are the production upgrade path.
 - Orion’s current evaluation is synthetic. Production retraining should use anonymized traffic, backend health, observed latency/cost, and human quality feedback.
-
-## License
-
-Add a license file before distributing or reusing this project publicly.
