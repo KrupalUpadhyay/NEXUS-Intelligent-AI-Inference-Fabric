@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="NEXUS dashboard screenshot placeholder">
-  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#13284c"/><stop offset="1" stop-color="#070b14"/></linearGradient></defs>
-  <rect width="1200" height="630" fill="url(#g)"/><rect x="70" y="70" width="1060" height="490" rx="24" fill="#0c1627" stroke="#315e9e"/>
-  <text x="120" y="185" fill="#88b1ff" font-family="Arial, sans-serif" font-size="28" letter-spacing="6">NEXUS DASHBOARD</text>
-  <text x="120" y="270" fill="#f0f5ff" font-family="Arial, sans-serif" font-size="58" font-weight="bold">Screenshot placeholder</text>
-  <text x="120" y="330" fill="#a5b5cf" font-family="Arial, sans-serif" font-size="25">Replace docs/assets/dashboard-placeholder.svg with a real dashboard capture.</text>
-  <circle cx="150" cy="445" r="13" fill="#42e7a3"/><text x="180" y="453" fill="#cbd9ee" font-family="Arial, sans-serif" font-size="25">Live routing · semantic cache · Orion decisions</text>
-</svg>
