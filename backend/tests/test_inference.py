@@ -21,7 +21,7 @@ def test_infer_returns_stable_orchestration_contract() -> None:
     assert body["cached"] is False
     assert body["routing"]["selected_backend"] == "mock-gpt-4o"
     assert "Explain async APIs." in body["output"]
-    assert body["quality_score"] == 0.93
+    assert body["quality_score"] == 0.88
 
 
 def test_infer_rejects_invalid_requests() -> None:

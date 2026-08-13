@@ -22,3 +22,13 @@ def test_trained_orion_selects_a_configured_mock_backend() -> None:
     assert decision is not None
     assert decision.backend in {"mock-gpt-4o", "mock-claude-4", "mock-llama-3", "mock-mistral"}
     assert 0 <= decision.confidence <= 1
+
+
+def test_orion_can_change_route_without_changing_task_type() -> None:
+    engine = OrionPolicyEngine("models/orion_policy.joblib")
+    prompt = "Summarize the following distributed systems incident report with risks and action items. " * 30
+    low_priority = engine.decide(InferenceRequest(prompt=prompt, task_type=TaskType.SUMMARIZATION, max_tokens=128, user_priority=0, metadata={"queue_length": "0"}))
+    high_priority = engine.decide(InferenceRequest(prompt=prompt, task_type=TaskType.SUMMARIZATION, max_tokens=2048, user_priority=10, metadata={"queue_length": "70"}))
+
+    assert low_priority is not None and high_priority is not None
+    assert low_priority.backend != high_priority.backend

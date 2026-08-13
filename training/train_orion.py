@@ -1,4 +1,4 @@
-"""Train Orion from benchmark observations and serialize a deployable XGBoost artifact."""
+"""Train Orion from benchmark observations and serialize a deployable policy."""
 
 import argparse
 import json
@@ -27,8 +27,8 @@ def score_candidates(candidates: list[dict[str, object]]) -> dict[str, object]:
     max_latency = max(float(row["latency_ms"] or 1) for row in available)
     max_cost = max(float(row["cost_usd"] or 0.000001) for row in available)
     priority = int(available[0]["user_priority"])
-    quality_weight = 0.45 + priority * 0.025
-    latency_weight = 0.35 - priority * 0.02
+    quality_weight = 0.30 + priority * 0.06
+    latency_weight = 0.45 - priority * 0.04
     cost_weight = 1 - quality_weight - latency_weight
     return max(available, key=lambda row: quality_weight * float(row["quality_score"]) - latency_weight * (float(row["latency_ms"] or max_latency) / max_latency) - cost_weight * (float(row["cost_usd"] or max_cost) / max_cost))
 

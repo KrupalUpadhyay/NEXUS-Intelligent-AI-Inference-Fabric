@@ -24,7 +24,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. Vite proxies `/api` and the live WebSocket to the
+Open `http://localhost:5174`. Vite proxies `/api` and the live WebSocket to the
 API automatically.
 
 ## Verify

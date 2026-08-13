@@ -24,8 +24,8 @@ def generate_workload(count: int, seed: int) -> list[dict[str, object]]:
     rows = []
     for index in range(count):
         task_type = generator.choice(list(TEMPLATES))
-        detail = " ".join(generator.choice(TOPICS) for _ in range(generator.randint(0, 12)))
-        rows.append({"workload_id": f"workload-{index:05d}", "prompt": f"{generator.choice(TEMPLATES[task_type]).format(topic=generator.choice(TOPICS))} Context: {detail}", "task_type": task_type, "max_tokens": generator.choice([128, 256, 512, 1024, 2048]), "user_priority": generator.randint(0, 10), "metadata": {"queue_length": str(generator.randint(0, 40))}})
+        detail = " ".join(generator.choice(TOPICS) for _ in range(generator.randint(0, 80)))
+        rows.append({"workload_id": f"workload-{index:05d}", "prompt": f"{generator.choice(TEMPLATES[task_type]).format(topic=generator.choice(TOPICS))} Context: {detail}", "task_type": task_type, "max_tokens": generator.choice([64, 128, 256, 512, 1024, 2048, 4096]), "user_priority": generator.randint(0, 10), "metadata": {"queue_length": str(generator.randint(0, 80))}})
     return rows
 
 

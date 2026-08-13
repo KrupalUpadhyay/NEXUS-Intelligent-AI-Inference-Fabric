@@ -31,6 +31,20 @@ the learned Orion policy normally.
 docker compose up --build
 ```
 
+### Recommended: one-command local demo (no Docker)
+
+Install dependencies once, then launch both the API and dashboard:
+
+```powershell
+cd backend; python -m pip install -r requirements-dev.txt; cd ..
+cd frontend; npm install; cd ..
+python run.py
+```
+
+The dashboard opens at http://localhost:5174. Submit all inference requests
+directly from its **Submit inference** panel; choose **Orion auto-route** or a
+specific simulated backend. Press `Ctrl+C` in the launcher terminal to stop it.
+
 The API image uses only compact runtime dependencies. If the first Docker build
 reports a network timeout, rerun `docker compose build api` and then
 `docker compose up`.
