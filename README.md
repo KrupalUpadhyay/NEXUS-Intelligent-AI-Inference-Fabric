@@ -219,7 +219,7 @@ run.py             One-command local launcher
 ## Demo
 
 <!-- TODO: Replace this with a hosted GIF or a video thumbnail. -->
-[![NEXUS demo video placeholder](docs/assets/demo-video-placeholder.svg)](https://github.com/KrupalUpadhyay/NEXUS-Intelligent-AI-Inference-Fabric)
+[![NEXUS demo video placeholder]([https://mega.nz/file/b8QC1YIb#mOB_fRPqShfgTEFhh8YZcuguMLY9mvVCFer60IQjnZw])
 
 Suggested demo sequence:
 
