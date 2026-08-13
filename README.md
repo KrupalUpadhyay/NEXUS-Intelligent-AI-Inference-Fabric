@@ -221,8 +221,6 @@ run.py             One-command local launcher
 <!-- TODO: Replace this with a hosted GIF or a video thumbnail. -->
 [NEXUS demo video](https://mega.nz/file/b8QC1YIb#mOB_fRPqShfgTEFhh8YZcuguMLY9mvVCFer60IQjnZw)
 
-Run Using : 'python run.py'
-
 ## Limitations and next steps
 
 - Simulated providers are intentionally used for cost-free, repeatable demos; real provider SDK adapters are a natural next step.
