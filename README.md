@@ -8,8 +8,8 @@
 
 > NEXUS is a portfolio-grade AI infrastructure project. Instead of sending every request to one model, it evaluates request context and routes inference toward the best available backend for quality, latency, and cost.
 
-<!-- Dashboard screenshot converted from Dashboard.png to SVG for GitHub. -->
-![NEXUS dashboard](docs/assets/Dashboard.svg)
+<!-- Dashboard screenshot. Keep the filename casing exactly as shown for GitHub. -->
+![NEXUS dashboard](docs/assets/Dashboard.png)
 
 ## Why NEXUS?
 
